@@ -1,38 +1,55 @@
+* {
+    padding: 0; margin: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+:root {
+    --font-color: #b2b2b2;
+}
+
 h1 {
-    font-size: 40px;
+    font-size: 4rem;
     text-align: center;
 }
 
 h2 {
-    font-size: 25px;
+    font-size: 2.5rem;
     text-align: center;
 }
 
 h3 {
-    font-size: 15px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.game p {
+    font-size: 4rem;
     text-align: center;
 }
 
 a {
-    font-size: 40px;
-    color: white;
+    font-size: 4rem;
+    color: var(--font-color);
     text-decoration: none;
 }
 
 body {
-    background: #EEEEEE;
+    background: #393434;
 }
 
 header {
-    height: 100px;
+    height: 10rem;
     width: 100%;
     padding: 15px 0;
-    background-color: #00bb98;
-    color: white;
+    background-color: #393434;
+    color: var(--font-color);
 }
 
 .navigation a {
-    color: #FFF;
+    color: var(--font-color);
     text-decoration: none;
 }
 
