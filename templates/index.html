@@ -15,20 +15,23 @@
 
     <body>
         <div id="home" class="game home">
-            <h1 id="start" class="text" style="line-height: 250px;">Press Mouse To Start</h1>
+            <h1 id="start" class="introduction">Press Mouse To Start</h1>
         </div>
 
         <div id="main" class="game main">
-            <p id="time-remaining" class="text"></p>
-            <p id="word-question" class="text"></p>
-            <p id="word-remaining" class="text"></p>
-            <p id="typed-words" class="text">Typed words: </p>
+            <div class="game-navigation">
+                <p id="time-remaining" class="text"></p>
+                <p id="combo"></p>
+            </div>
+            <p id="word-remaining" class="word-remaining"></p>
+            <p id="typed-words" class="text"></p>
         </div>
 
         <div id="result" class="game result">
             <h1 id="finish" class="text"></h1>
             <p id="score" class="text"></p>
             <p id="resultAnswered" class="text"></p>
+            <p id="maxCombo" class="text"></p>
             <p id="typed" class="text"></p>
             <p id="missType" class="text"></p>
             <p id="accuracy" class="text"></p>

@@ -19,7 +19,7 @@ let question = ["high level language", "low level language", "source code", "exe
 // カウントダウン
 let readyTime = 2;
 // ゲームの残り時間
-let remainingTime = 100;
+let remainingTime = 10;
 // 出題する単語をランダムで決める
 let questionNumber = Math.floor(Math.random() * question.length);
 // 変数question_numberを記憶
@@ -34,6 +34,9 @@ let typed = 0;
 let missType = 0;
 // タイピングし終えた単語の数
 let answered = 0;
+//コンボ
+let combo = 0;
+let maxCombo = 0;
 // マウスを押すとカウントダウン開始
 window.addEventListener("mousedown", ready, {once: true});
 window.addEventListener("keypress", keyPressed);
@@ -66,6 +69,8 @@ function ready() {
         }
         // 時間が0以下になるとタイマー処理をストップする
         if (readyTime < 0) {
+            document.getElementById("home").style.opacity = 0;
+            document.getElementById("main").style.opacity = 1;
             countDown();
             clearInterval(readyTimer);
             displayWords();
@@ -82,6 +87,8 @@ function countDown() {
         if (remainingTime <= 0) {
             clearInterval(remainingTimer);
             finish();
+            document.getElementById("main").style.opacity = 0;
+            document.getElementById("result").style.opacity = 1;
             document.getElementById("result").style.zIndex = 30;
         }
     }, 1000);
@@ -90,7 +97,6 @@ function countDown() {
 // 問題を表示する
 function displayWords() {
     document.getElementById("time-remaining").innerHTML = remainingTime;
-    document.getElementById("word-question").innerHTML = question[questionNumber].substring(questionAnswer, questionLength);
     document.getElementById("word-remaining").innerHTML = question[questionNumber].substring(questionAnswer, questionLength);
     document.getElementById("typed-words").innerHTML = "Typed words: " + answered;
 }
@@ -109,19 +115,29 @@ function setQuestion() {
 
 // 入力されたキーが合っているか判定する
 function keyCodeCheck(keyCode) {
+    let isCorrect = false;
     // 押したキーが合っていたら
     if (question[questionNumber].charAt(questionAnswer) == keyCode) {
         // 正解した文字数を1増やす
         questionAnswer += 1;
+        isCorrect = true;
         document.getElementById("correct").currentTime = 0;
-        document.getElementById("correct").play()
+        document.getElementById("correct").play();
         // 問題の解答状況を更新、正解した文字を削除する
-        document.getElementById("word-remaining").innerHTML = "|" + question[questionNumber].substring(questionAnswer, questionLength);
+        document.getElementById("word-remaining").innerHTML = "<span class='caret'>|</span>" + question[questionNumber].substring(questionAnswer, questionLength);
+        displayCombo(isCorrect);
     } else {
         missType += 1;
+        displayCombo(isCorrect);
         document.getElementById("miss").currentTime = 0;
-        document.getElementById("miss").play()
+        document.getElementById("miss").play();
     }
+}
+
+function displayCombo(isCorrect) {
+    combo = isCorrect ? combo += 1 : 0;
+    maxCombo = combo > maxCombo ? combo : maxCombo;
+    document.getElementById("combo").innerHTML = "COMBO: " + combo;
 }
 
 // 変数をリセットする関数
@@ -148,9 +164,10 @@ function finish() {
     }
     document.getElementById("finish").innerHTML = "Finish!";
     document.getElementById("score").innerHTML = "Score: " + score;
-    document.getElementById("resultAnswered").innerHTML = "Typed words: " + answered;
-    document.getElementById("typed").innerHTML = "typed: " + typed;
-    document.getElementById("missType").innerHTML = "Miss typed: " + missType;
+    document.getElementById("resultAnswered").innerHTML = "Typed Words: " + answered;
+    document.getElementById("maxCombo").innerHTML = "Max Combo: " + maxCombo;
+    document.getElementById("typed").innerHTML = "Typed: " + typed;
+    document.getElementById("missType").innerHTML = "Miss Typed: " + missType;
     document.getElementById("accuracy").innerHTML = "Accuracy: " + accuracy + "%";
     reset();
 }
