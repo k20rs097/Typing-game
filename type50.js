@@ -19,7 +19,7 @@ let question = ["high level language", "low level language", "source code", "exe
 // カウントダウン
 let readyTime = 2;
 // ゲームの残り時間
-let remainingTime = 10;
+let remainingTime = 60;
 // 出題する単語をランダムで決める
 let questionNumber = Math.floor(Math.random() * question.length);
 // 変数question_numberを記憶
@@ -41,10 +41,22 @@ let maxCombo = 0;
 window.addEventListener("mousedown", ready, {once: true});
 window.addEventListener("keypress", keyPressed);
 
+// 変数をリセットする関数
+function init() {
+    readyTime = 0;
+    remainingTime = 60;
+    questionAnswer = 0;
+    answered = 0;
+    typed = 0;
+    missType = 0;
+    document.getElementById("word-remaining").innerHTML = "";
+    document.getElementById("time-remaining").innerHTML = "";
+}
+
 // ここに作った関数をまとめる
 function keyPressed(e) {
     let keyCode = e.key;
-    typed++;
+    typed += 1;
     if (readyTime < 0 && remainingTime >= 0) {
         if (questionLength == questionLength - questionAnswer) {
             displayWords();
@@ -140,18 +152,6 @@ function displayCombo(isCorrect) {
     document.getElementById("combo").innerHTML = "COMBO: " + combo;
 }
 
-// 変数をリセットする関数
-function reset() {
-    readyTime = 0;
-    remainingTime = 60;
-    questionAnswer = 0;
-    answered = 0;
-    typed = 0;
-    missType = 0;
-    document.getElementById("word-remaining").innerHTML = "";
-    document.getElementById("time-remaining").innerHTML = "";
-}
-
 // 変数のリセット、結果の表示
 function finish() {
     let accuracy = Math.round((typed - missType) / typed * 1000) / 10
@@ -169,5 +169,5 @@ function finish() {
     document.getElementById("typed").innerHTML = "Typed: " + typed;
     document.getElementById("missType").innerHTML = "Miss Typed: " + missType;
     document.getElementById("accuracy").innerHTML = "Accuracy: " + accuracy + "%";
-    reset();
+    init();
 }
